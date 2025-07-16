@@ -57,6 +57,7 @@ export const CartProvider = ({ children }) => {
         clearCart,
         openCart,
         closeCart,
+        isCartOpen,
       }}
     >
       {children}

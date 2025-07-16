@@ -98,15 +98,38 @@ const FeaturedProducts = () => {
                 </div>
 
                 <div className="bg-white px-4 pb-4">
-                  {addedProductId === index ? (
+                  <div style={{ minHeight: 44 }}>
                     <button
                       onClick={() => openCart()}
-                      className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm"
+                      className={`w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm
+                        ${
+                          addedProductId === index
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 pointer-events-none -translate-y-2"
+                        }
+                        duration-500 ease-in-out absolute left-0`}
+                      style={{
+                        position: "absolute",
+                        width: "calc(100% - 2rem)",
+                        marginLeft: "1rem",
+                        marginRight: "1rem",
+                        zIndex: 10,
+                        transition: "opacity 0.5s, transform 0.5s",
+                      }}
                     >
                       <i className="fas fa-shopping-cart mr-2"></i> View Cart
                     </button>
-                  ) : (
-                    <div className="flex space-x-2">
+                    <div
+                      className={`flex space-x-2 transition-all duration-500 ${
+                        addedProductId === index
+                          ? "opacity-0 pointer-events-none scale-95"
+                          : "opacity-100 scale-100"
+                      }`}
+                      style={{
+                        transition: "opacity 0.5s, transform 0.5s",
+                        position: "relative",
+                      }}
+                    >
                       <button
                         onClick={() => handleAddToCart(product, index)}
                         className="flex-1 bg-green-600 text-white py-2 px-3 rounded hover:bg-green-700 transition text-sm flex items-center justify-center"
@@ -122,7 +145,7 @@ const FeaturedProducts = () => {
                         Buy
                       </button>
                     </div>
-                  )}
+                  </div>
                 </div>
 
                 {product.badge && (

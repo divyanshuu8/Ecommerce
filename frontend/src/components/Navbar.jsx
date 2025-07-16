@@ -6,9 +6,9 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
+  //const [cartOpen, setCartOpen] = useState(false);
   const menuRef = useRef(null);
-  const { cartItems } = useCart(); // 👈 Get cart items
+  const { cartItems, isCartOpen, openCart, closeCart } = useCart(); // 👈 Get cart items
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
@@ -58,11 +58,8 @@ const Navbar = () => {
 
             {/* Icons */}
             <div className="hidden sm:ml-6 sm:flex sm:items-center relative">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                Login
-              </button>
               <button
-                onClick={() => setCartOpen(true)}
+                onClick={openCart}
                 className="ml-3 p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full relative"
               >
                 <span className="sr-only">Cart</span>
@@ -117,11 +114,8 @@ const Navbar = () => {
               ))}
             </div>
             <div className="pt-4 pb-3 border-t border-gray-200 px-4 flex items-center">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                Login
-              </button>
               <button
-                onClick={() => setCartOpen(true)}
+                onClick={openCart}
                 className="ml-auto p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full relative"
               >
                 <i className="fas fa-shopping-cart"></i>
@@ -137,7 +131,7 @@ const Navbar = () => {
       </nav>
 
       {/* Slide-in Cart Panel */}
-      <CartPanel open={cartOpen} onClose={() => setCartOpen(false)} />
+      <CartPanel open={isCartOpen} onClose={closeCart} />
     </>
   );
 };
