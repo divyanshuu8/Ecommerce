@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 const products = [
   {
@@ -34,6 +35,26 @@ const products = [
 ];
 
 const FeaturedProducts = () => {
+  const { addToCart, openCart } = useCart();
+  const [addedProductId, setAddedProductId] = useState(null);
+
+  const handleAddToCart = (product, index) => {
+    addToCart({
+      id: index,
+      name: product.title,
+      price: parseFloat(product.price.replace("$", "")),
+      image: product.image,
+    });
+
+    setAddedProductId(index);
+    setTimeout(() => setAddedProductId(null), 3000);
+  };
+
+  const handleBuyNow = (product, index) => {
+    handleAddToCart(product, index);
+    openCart(); // Ensure this exists in your context to open CartPanel
+  };
+
   return (
     <div className="bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,17 +84,10 @@ const FeaturedProducts = () => {
                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                   />
                 </div>
+
                 <div className="mt-4 flex justify-between bg-white p-4 rounded-b-lg">
                   <div>
-                    <h3 className="text-sm text-gray-700">
-                      <a href="#">
-                        <span
-                          aria-hidden="true"
-                          className="absolute inset-0"
-                        ></span>
-                        {product.title}
-                      </a>
-                    </h3>
+                    <h3 className="text-sm text-gray-700">{product.title}</h3>
                     <p className="mt-1 text-sm text-gray-500">
                       {product.description}
                     </p>
@@ -82,6 +96,35 @@ const FeaturedProducts = () => {
                     {product.price}
                   </p>
                 </div>
+
+                <div className="bg-white px-4 pb-4">
+                  {addedProductId === index ? (
+                    <button
+                      onClick={() => openCart()}
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm"
+                    >
+                      <i className="fas fa-shopping-cart mr-2"></i> View Cart
+                    </button>
+                  ) : (
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleAddToCart(product, index)}
+                        className="flex-1 bg-green-600 text-white py-2 px-3 rounded hover:bg-green-700 transition text-sm flex items-center justify-center"
+                      >
+                        <i className="fas fa-cart-plus mr-1"></i>
+                        Add
+                      </button>
+                      <button
+                        onClick={() => handleBuyNow(product, index)}
+                        className="flex-1 bg-yellow-500 text-white py-2 px-3 rounded hover:bg-yellow-600 transition text-sm flex items-center justify-center"
+                      >
+                        <i className="fas fa-bolt mr-1"></i>
+                        Buy
+                      </button>
+                    </div>
+                  )}
+                </div>
+
                 {product.badge && (
                   <div className="absolute top-3 right-3 bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                     {product.badge}

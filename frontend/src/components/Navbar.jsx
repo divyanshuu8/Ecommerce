@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import CartPanel from "./Cart"; // make sure path is correct
+import { useCart } from "../context/CartContext.jsx"; // Adjust path if needed
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -7,6 +8,8 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const menuRef = useRef(null);
+  const { cartItems } = useCart(); // 👈 Get cart items
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     if (mobileMenuOpen) setShowMenu(true);
@@ -65,7 +68,7 @@ const Navbar = () => {
                 <span className="sr-only">Cart</span>
                 <i className="fas fa-shopping-cart"></i>
                 <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-green-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5">
-                  3
+                  {cartCount}
                 </span>
               </button>
             </div>
@@ -119,9 +122,14 @@ const Navbar = () => {
               </button>
               <button
                 onClick={() => setCartOpen(true)}
-                className="ml-auto p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full"
+                className="ml-auto p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full relative"
               >
                 <i className="fas fa-shopping-cart"></i>
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5">
+                    {cartCount}
+                  </span>
+                )}
               </button>
             </div>
           </div>
