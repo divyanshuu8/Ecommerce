@@ -1,26 +1,21 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import FeaturedCategories from "./components/FeaturedCategories ";
-import FeaturedProducts from "./components/Products";
-import Testimonials from "./components/Testimonial";
 import Footer from "./components/Footer";
 import Newsletter from "./components/NewsLetter";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
 
 function App() {
   return (
-    <>
+    <Router>
       <Navbar />
-      <Hero />
-      <FeaturedCategories />
-      <FeaturedProducts />
-      <Testimonials />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
       <Newsletter />
       <Footer />
-    </>
+    </Router>
   );
 }
 

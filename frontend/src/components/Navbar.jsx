@@ -44,15 +44,23 @@ const Navbar = () => {
                 </span>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                {["Home", "Shop", "About", "Contact"].map((item) => (
-                  <a
-                    key={item}
-                    href="#"
-                    className="text-gray-500 hover:text-gray-700 hover:border-gray-300 border-b-2 border-transparent inline-flex items-center px-1 pt-1 text-sm font-medium"
-                  >
-                    {item}
-                  </a>
-                ))}
+                {["Home", "Products", "About", "Contact"].map((item) => {
+                  const paths = {
+                    Home: "/",
+                    Products: "/products",
+                    About: "/about",
+                    Contact: "/contact",
+                  };
+                  return (
+                    <a
+                      key={item}
+                      href={paths[item]}
+                      className="text-gray-500 hover:text-gray-700 hover:border-gray-300 border-b-2 border-transparent inline-flex items-center px-1 pt-1 text-sm font-medium"
+                    >
+                      {item}
+                    </a>
+                  );
+                })}
               </div>
             </div>
 
@@ -103,15 +111,23 @@ const Navbar = () => {
             }`}
           >
             <div className="pt-2 pb-3 space-y-1 px-4">
-              {["Home", "Shop", "About", "Contact"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="block text-base font-medium text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-md"
-                >
-                  {item}
-                </a>
-              ))}
+              {["Home", "Products", "About", "Contact"].map((item) => {
+                const paths = {
+                  Home: "/",
+                  Shop: "/products",
+                  About: "/about",
+                  Contact: "/contact",
+                };
+                return (
+                  <a
+                    key={item}
+                    href={paths[item]}
+                    className="block text-base font-medium text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-md"
+                  >
+                    {item}
+                  </a>
+                );
+              })}
             </div>
             <div className="pt-4 pb-3 border-t border-gray-200 px-4 flex items-center">
               <button
