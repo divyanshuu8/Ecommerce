@@ -1,29 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { useProducts } from "../context/ProductContext";
+import ProductCard from "./Product";
+import { useCart } from "../context/CartContext";
 
-const ProductGrid = ({ products = [] }) => {
+const ProductGrid = () => {
+  const { filteredProducts } = useProducts();
+  const { addToCart, openCart } = useCart();
+  const [addedProductId, setAddedProductId] = useState(null);
+
+  const handleAddToCart = (product, index) => {
+    addToCart({
+      id: index,
+      name: product.title,
+      price: parseFloat(product.price.replace("$", "")),
+      image: product.image,
+    });
+
+    setAddedProductId(index);
+    setTimeout(() => setAddedProductId(null), 3000);
+  };
+
+  const handleBuyNow = (product, index) => {
+    handleAddToCart(product, index);
+    openCart();
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.length > 0 ? (
-          products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white p-4 rounded-lg shadow hover:shadow-md transition"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-40 object-cover mb-2 rounded"
-              />
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="text-green-600 font-bold">₹{product.price}</p>
-            </div>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product, index) => (
+            <ProductCard
+              key={index}
+              product={product}
+              index={index}
+              addedProductId={addedProductId}
+              openCart={openCart}
+              handleAddToCart={handleAddToCart}
+              handleBuyNow={handleBuyNow}
+            />
           ))
         ) : (
           <p>No products available.</p>
         )}
       </div>
-
       {/* Pagination */}
       <div className="mt-10 flex justify-center">
         <nav className="flex items-center space-x-2">

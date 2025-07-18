@@ -1,42 +1,13 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
-
-const products = [
-  {
-    title: "Bamboo Toothbrush Set",
-    description: "4-pack",
-    price: "$12.99",
-    image:
-      "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    badge: "NEW",
-  },
-  {
-    title: "Stainless Steel Bottle",
-    description: "750ml",
-    price: "$24.99",
-    image:
-      "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-  },
-  {
-    title: "Organic Cotton Tote",
-    description: "Natural color",
-    price: "$18.99",
-    image:
-      "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    badge: "SALE",
-  },
-  {
-    title: "Beeswax Food Wraps",
-    description: "3-pack",
-    price: "$19.99",
-    image:
-      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
-  },
-];
+import ProductCard from "./Product";
+import { useProducts } from "../context/ProductContext"; // use product context
 
 const FeaturedProducts = () => {
+  const { products } = useProducts(); // get products from context
   const { addToCart, openCart } = useCart();
   const [addedProductId, setAddedProductId] = useState(null);
+  const latestProducts = products.slice(-4).reverse();
 
   const handleAddToCart = (product, index) => {
     addToCart({
@@ -72,88 +43,16 @@ const FeaturedProducts = () => {
 
         <div className="mt-10">
           <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {products.map((product, index) => (
-              <div
+            {latestProducts.map((product, index) => (
+              <ProductCard
                 key={index}
-                className="group relative transform transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-                  />
-                </div>
-
-                <div className="mt-4 flex justify-between bg-white p-4 rounded-b-lg">
-                  <div>
-                    <h3 className="text-sm text-gray-700">{product.title}</h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {product.description}
-                    </p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {product.price}
-                  </p>
-                </div>
-
-                <div className="bg-white px-4 pb-4">
-                  <div style={{ minHeight: 44 }}>
-                    <button
-                      onClick={() => openCart()}
-                      className={`w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm
-                        ${
-                          addedProductId === index
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 pointer-events-none -translate-y-2"
-                        }
-                        duration-500 ease-in-out absolute left-0`}
-                      style={{
-                        position: "absolute",
-                        width: "calc(100% - 2rem)",
-                        marginLeft: "1rem",
-                        marginRight: "1rem",
-                        zIndex: 10,
-                        transition: "opacity 0.5s, transform 0.5s",
-                      }}
-                    >
-                      <i className="fas fa-shopping-cart mr-2"></i> View Cart
-                    </button>
-                    <div
-                      className={`flex space-x-2 transition-all duration-500 ${
-                        addedProductId === index
-                          ? "opacity-0 pointer-events-none scale-95"
-                          : "opacity-100 scale-100"
-                      }`}
-                      style={{
-                        transition: "opacity 0.5s, transform 0.5s",
-                        position: "relative",
-                      }}
-                    >
-                      <button
-                        onClick={() => handleAddToCart(product, index)}
-                        className="flex-1 bg-green-600 text-white py-2 px-3 rounded hover:bg-green-700 transition text-sm flex items-center justify-center"
-                      >
-                        <i className="fas fa-cart-plus mr-1"></i>
-                        Add
-                      </button>
-                      <button
-                        onClick={() => handleBuyNow(product, index)}
-                        className="flex-1 bg-yellow-500 text-white py-2 px-3 rounded hover:bg-yellow-600 transition text-sm flex items-center justify-center"
-                      >
-                        <i className="fas fa-bolt mr-1"></i>
-                        Buy
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {product.badge && (
-                  <div className="absolute top-3 right-3 bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {product.badge}
-                  </div>
-                )}
-              </div>
+                product={product}
+                index={index}
+                addedProductId={addedProductId}
+                openCart={openCart}
+                handleAddToCart={handleAddToCart}
+                handleBuyNow={handleBuyNow}
+              />
             ))}
           </div>
         </div>
