@@ -44,11 +44,11 @@ const Navbar = () => {
                 </span>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                {["Home", "Products", "About", "Contact"].map((item) => {
+                {["Home", "Products", "TrackOrder", "Contact"].map((item) => {
                   const paths = {
                     Home: "/",
                     Products: "/products",
-                    About: "/about",
+                    TrackOrder: "/track-order",
                     Contact: "/contact",
                   };
                   return (
@@ -111,11 +111,11 @@ const Navbar = () => {
             }`}
           >
             <div className="pt-2 pb-3 space-y-1 px-4">
-              {["Home", "Products", "About", "Contact"].map((item) => {
+              {["Home", "Products", "TrackOrder", "Contact"].map((item) => {
                 const paths = {
                   Home: "/",
                   Shop: "/products",
-                  About: "/about",
+                  TrackOrder: "/track-order",
                   Contact: "/contact",
                 };
                 return (

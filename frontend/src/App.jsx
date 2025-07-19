@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Newsletter from "./components/NewsLetter";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Newsletter />
       <Footer />

@@ -1,4 +1,5 @@
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const CartPanel = ({ open, onClose }) => {
   const { cartItems, removeFromCart, clearCart, updateQuantity } = useCart();
@@ -7,6 +8,14 @@ const CartPanel = ({ open, onClose }) => {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/checkout");
+    onClose();
+  };
 
   return (
     <div
@@ -95,7 +104,10 @@ const CartPanel = ({ open, onClose }) => {
               <span>Total:</span>
               <span>₹{total.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            <button
+              onClick={handleCheckout}
+              className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+            >
               Checkout
             </button>
             <button
