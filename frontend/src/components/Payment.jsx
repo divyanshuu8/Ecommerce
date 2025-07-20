@@ -172,18 +172,18 @@ const PaymentSection = ({ onBack, onNext, initialValues }) => {
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:gap-0 sm:justify-between">
         <button
           type="button"
           onClick={onBack}
-          className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50"
+          className="w-full sm:w-auto px-3 py-2 sm:px-6 sm:py-3 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 text-sm sm:text-base transition-all"
         >
           Back to Shipping
         </button>
         <button
           type="button"
           onClick={handleContinue}
-          className="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700"
+          className="w-full sm:w-auto px-3 py-2 sm:px-6 sm:py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 text-sm sm:text-base transition-all"
         >
           Review Order
         </button>
