@@ -1,0 +1,39 @@
+.sticky-image {
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+
+.image-thumbnail {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.image-thumbnail:hover,
+.image-thumbnail.active {
+  border-color: #3b82f6;
+}
+
+.quantity-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .sticky-image {
+    position: static;
+  }
+}
