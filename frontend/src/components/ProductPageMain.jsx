@@ -1,14 +1,7 @@
 import { useState } from "react";
 
-export default function ProductPageMain() {
-  const images = [
-    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80",
-    "https://images.unsplash.com/photo-1545127398-5aae47194b22?auto=format&fit=crop&w=1000&q=80",
-    "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80",
-    "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1000&q=80",
-  ];
-
-  const [mainImage, setMainImage] = useState(images[0]);
+export default function ProductPageMain({ product }) {
+  const [mainImage, setMainImage] = useState(product.images[0]);
   const [zoomed, setZoomed] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -30,7 +23,7 @@ export default function ProductPageMain() {
               />
             </div>
             <div className="grid grid-cols-4 gap-2">
-              {images.map((img, i) => (
+              {product.images.map((img, i) => (
                 <div
                   key={i}
                   onClick={() => setMainImage(img)}
@@ -76,13 +69,13 @@ export default function ProductPageMain() {
         <div className="lg:w-1/2">
           <div className="bg-white rounded-lg shadow-md p-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              AudioTech Pro X7 Wireless Headphones
+              {product.title}
             </h1>
             <div className="flex items-center mb-4">
               <span className="text-gray-600 mr-4">
                 by{" "}
                 <a href="#" className="text-blue-600 hover:underline">
-                  AudioTech
+                  {product.brand}
                 </a>
               </span>
               <div className="flex items-center">
@@ -96,7 +89,7 @@ export default function ProductPageMain() {
                   href="#reviews"
                   className="text-blue-600 text-sm hover:underline"
                 >
-                  (142 reviews)
+                  ({product.reviews_count} reviews)
                 </a>
               </div>
             </div>
@@ -104,17 +97,17 @@ export default function ProductPageMain() {
             <div className="mb-6">
               <div className="flex items-center">
                 <span className="text-3xl font-bold text-gray-900">
-                  $249.99
+                  {product.pricing.current_price}
                 </span>
                 <span className="ml-3 text-lg text-gray-500 line-through">
-                  $299.99
+                  {product.pricing.original_price}
                 </span>
                 <span className="ml-3 bg-red-100 text-red-800 text-sm font-medium px-2 py-0.5 rounded">
-                  17% OFF
+                  {product.pricing.discount_percentage}% OFF
                 </span>
               </div>
               <p className="text-green-600 text-sm mt-1">
-                In Stock (Only 5 left)
+                In Stock (Only {product.availability.stock_left} left)
               </p>
             </div>
 
@@ -160,7 +153,7 @@ export default function ProductPageMain() {
                   </button>
                 </div>
                 <span className="ml-3 text-sm text-gray-500">
-                  Max 5 per customer
+                  Max {product.availability.max_per_customer} per customer
                 </span>
               </div>
             </div>
@@ -208,12 +201,9 @@ export default function ProductPageMain() {
                 Highlights
               </h3>
               <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                <li>Active Noise Cancellation technology</li>
-                <li>Up to 30 hours of battery life</li>
-                <li>Hi-Res Audio certified</li>
-                <li>Built-in Alexa and Google Assistant</li>
-                <li>Multi-point Bluetooth connectivity</li>
-                <li>Comfortable over-ear design with memory foam</li>
+                {product.highlights.map((spec, index) => (
+                  <li key={index}>{spec}</li>
+                ))}
               </ul>
             </div>
           </div>

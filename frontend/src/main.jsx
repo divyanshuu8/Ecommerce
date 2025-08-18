@@ -8,10 +8,10 @@ import { ProductProvider } from "./context/ProductContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <ProductProvider>
+    <ProductProvider>
+      <CartProvider>
         <App />
-      </ProductProvider>
-    </CartProvider>
+      </CartProvider>
+    </ProductProvider>
   </StrictMode>
 );

@@ -1,6 +1,6 @@
 // components/ProductCard.jsx
-
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({
   product,
@@ -15,22 +15,28 @@ const ProductCard = ({
       key={index}
       className="group relative transform transition duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
-      <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-        <img
-          src={product.image}
-          alt={product.title}
-          className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-        />
-      </div>
-
-      <div className="mt-4 flex justify-between bg-white p-4 rounded-b-lg">
-        <div>
-          <h3 className="text-sm text-gray-700">{product.title}</h3>
-          <p className="mt-1 text-sm text-gray-500">{product.description}</p>
+      {/* Wrap the top part of the card with a Link */}
+      <Link to={`/products/${product.id}`}>
+        <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+          <img
+            src={product.images[0]}
+            alt={product.title}
+            className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+          />
         </div>
-        <p className="text-sm font-medium text-gray-900">{product.price}</p>
-      </div>
 
+        <div className="mt-4 flex justify-between bg-white p-4 rounded-b-lg">
+          <div>
+            <h3 className="text-sm text-gray-700">{product.title}</h3>
+            <p className="mt-1 text-sm text-gray-500">{product.description}</p>
+          </div>
+          <p className="text-sm font-medium text-gray-900">
+            {product.pricing.current_price}
+          </p>
+        </div>
+      </Link>
+
+      {/* Actions (not wrapped in Link to keep buttons functional) */}
       <div className="bg-white px-4 pb-4">
         <div style={{ minHeight: 44 }}>
           <button

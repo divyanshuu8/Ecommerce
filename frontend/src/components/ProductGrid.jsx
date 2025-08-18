@@ -8,20 +8,15 @@ const ProductGrid = () => {
   const { addToCart, openCart } = useCart();
   const [addedProductId, setAddedProductId] = useState(null);
 
-  const handleAddToCart = (product, index) => {
-    addToCart({
-      id: index,
-      name: product.title,
-      price: parseFloat(product.price.replace("$", "")),
-      image: product.image,
-    });
+  const handleAddToCart = (product) => {
+    addToCart(product.id); // Pass only ID (CartContext fetches full product)
 
-    setAddedProductId(index);
+    setAddedProductId(product.id);
     setTimeout(() => setAddedProductId(null), 3000);
   };
 
-  const handleBuyNow = (product, index) => {
-    handleAddToCart(product, index);
+  const handleBuyNow = (product) => {
+    handleAddToCart(product);
     openCart();
   };
 
@@ -29,15 +24,14 @@ const ProductGrid = () => {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((product, index) => (
+          filteredProducts.map((product) => (
             <ProductCard
-              key={index}
+              key={product.id}
               product={product}
-              index={index}
               addedProductId={addedProductId}
               openCart={openCart}
-              handleAddToCart={handleAddToCart}
-              handleBuyNow={handleBuyNow}
+              handleAddToCart={() => handleAddToCart(product)}
+              handleBuyNow={() => handleBuyNow(product)}
             />
           ))
         ) : (

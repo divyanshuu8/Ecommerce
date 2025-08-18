@@ -1,15 +1,14 @@
 // context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
+import { useProducts } from "./ProductContext"; // <-- hook into product context
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const { products } = useProducts(); // access all products
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const openCart = () => setIsCartOpen(true);
-  const closeCart = () => setIsCartOpen(false);
   const [cartItems, setCartItems] = useState(() => {
-    // Load cart from localStorage initially
     const storedCart = localStorage.getItem("cart");
     return storedCart ? JSON.parse(storedCart) : [];
   });
@@ -19,7 +18,14 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product) => {
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
+  // Add product by ID instead of passing whole object
+  const addToCart = (productId) => {
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item.id === product.id);
       if (existingItem) {
@@ -29,7 +35,18 @@ export const CartProvider = ({ children }) => {
             : item
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+
+      // Store only minimal info to keep cart lightweight
+      return [
+        ...prev,
+        {
+          id: product.id,
+          title: product.title,
+          price: product.pricing.current_price,
+          image: product.images[0],
+          quantity: 1,
+        },
+      ];
     });
   };
 

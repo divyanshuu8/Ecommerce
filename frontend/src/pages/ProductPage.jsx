@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./ProductPage.css";
+import { useProducts } from "../context/ProductContext";
+import { useParams } from "react-router-dom";
 import ProductPageMain from "../components/ProductPageMain";
 import ProductTabs from "../components/ProductsPageTab";
 
 const ProductPage = () => {
+  const { id } = useParams(); // grabs product id from URL
+  const { products } = useProducts();
+
+  // find the matching product
+  const product = products.find((p) => p.id == id);
+
+  if (!product) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <p className="text-red-500">❌ Product not found.</p>
+      </div>
+    );
+  }
   return (
     <>
       <div className="bg-gray-50">
@@ -16,8 +31,8 @@ const ProductPage = () => {
         </div>
       </div>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <ProductPageMain />
-        <ProductTabs />
+        <ProductPageMain product={product} />
+        <ProductTabs product={product} />
       </main>
     </>
   );
