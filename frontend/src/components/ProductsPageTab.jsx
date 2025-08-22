@@ -1,14 +1,16 @@
 // components/ProductTabs.jsx
 import React, { useState } from "react";
 
+
 const tabs = [
   { id: "specs", label: "Specifications" },
   { id: "reviews", label: "Reviews (143)" },
   { id: "qna", label: "Q&A (23)" },
 ];
 
-export default function ProductTabs() {
+export default function ProductTabs({ product }) {
   const [activeTab, setActiveTab] = useState("specs");
+  
 
   const openTab = (tabId) => {
     setActiveTab(tabId);
@@ -40,50 +42,69 @@ export default function ProductTabs() {
         {/* Specs Tab */}
         {activeTab === "specs" && (
           <div id="specs" className="tab-content">
-            <h3 className="text-lg font-bold text-gray-900 mb-3">General</h3>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>Brand: Apple</li>
-              <li>Model: iPhone 15 Pro</li>
-              <li>Storage: 256GB</li>
-              <li>Color: Space Black</li>
-            </ul>
-            <h3 className="text-lg font-bold text-gray-900 mt-6 mb-3">
-              Features
-            </h3>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li>A17 Bionic Chip</li>
-              <li>6.1-inch Super Retina XDR display</li>
-              <li>ProMotion with 120Hz refresh rate</li>
-              <li>5G Ready</li>
-            </ul>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* General */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  General
+                </h3>
+                <table className="w-full text-sm text-gray-700">
+                  <tbody>
+                    {Object.entries(product.tabs.specifications.general).map(
+                      ([key, value]) => (
+                        <tr key={key} className="border-b border-gray-200">
+                          <td className="py-2 font-medium capitalize">{key}</td>
+                          <td className="py-2">{value}</td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Features */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  Features
+                </h3>
+                <table className="w-full text-sm text-gray-700">
+                  <tbody>
+                    {product.tabs.specifications.features.map(
+                      (feature, idx) => (
+                        <tr key={idx} className="border-b border-gray-200">
+                          <td className="py-2 font-medium">
+                            Feature {idx + 1}
+                          </td>
+                          <td className="py-2">{feature}</td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Reviews Tab */}
         {activeTab === "reviews" && (
           <div id="reviews" className="tab-content">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Customer Reviews
-            </h2>
-
             <div className="space-y-4">
-              <div className="p-4 border rounded-lg bg-gray-50">
-                <p className="font-semibold text-gray-800">⭐ ⭐ ⭐ ⭐ ⭐</p>
-                <p className="text-gray-700">
-                  Amazing product! Battery life is excellent and camera quality
-                  is top-notch.
-                </p>
-                <p className="text-sm text-gray-500 mt-2">— John D.</p>
-              </div>
-
-              <div className="p-4 border rounded-lg bg-gray-50">
-                <p className="font-semibold text-gray-800">⭐ ⭐ ⭐ ⭐</p>
-                <p className="text-gray-700">
-                  Great phone overall but a little expensive. The display is
-                  beautiful though.
-                </p>
-                <p className="text-sm text-gray-500 mt-2">— Sarah K.</p>
-              </div>
+              {product?.tabs?.reviews?.length > 0 ? (
+                product.tabs.reviews.map((review, idx) => (
+                  <div key={idx} className="p-4 border rounded-lg bg-gray-50">
+                    <p className="font-semibold text-gray-800">
+                      {"⭐".repeat(review.rating)}
+                    </p>
+                    <p className="text-gray-700">{review.text}</p>
+                    <p className="text-sm text-gray-500 mt-2">
+                      — {review.author}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No reviews yet.</p>
+              )}
             </div>
           </div>
         )}
@@ -96,24 +117,18 @@ export default function ProductTabs() {
             </h2>
 
             <div className="space-y-6">
-              <div>
-                <p className="font-semibold text-gray-800">
-                  Q: Does it support fast charging?
-                </p>
-                <p className="text-gray-700">
-                  A: Yes, it supports up to 30W fast charging with a compatible
-                  charger.
-                </p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-gray-800">
-                  Q: Is it water resistant?
-                </p>
-                <p className="text-gray-700">
-                  A: Yes, it has IP68 water and dust resistance.
-                </p>
-              </div>
+              {product?.tabs?.qna?.length > 0 ? (
+                product.tabs.qna.map((item, idx) => (
+                  <div key={idx}>
+                    <p className="font-semibold text-gray-800">
+                      Q: {item.question}
+                    </p>
+                    <p className="text-gray-700">A: {item.answer}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No questions yet.</p>
+              )}
             </div>
           </div>
         )}

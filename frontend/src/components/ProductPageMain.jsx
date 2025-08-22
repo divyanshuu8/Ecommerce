@@ -1,9 +1,24 @@
 import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function ProductPageMain({ product }) {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [zoomed, setZoomed] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart, openCart } = useCart();
+  const [addedProductId, setAddedProductId] = useState(null);
+  const handleAddToCart = (product) => {
+    addToCart(product.id); // Pass only ID (CartContext fetches full product)
+
+    setAddedProductId(product.id);
+    setTimeout(() => setAddedProductId(null), 3000);
+  };
+
+  const handleBuyNow = (product) => {
+    handleAddToCart(product);
+    openCart();
+  };
 
   const increaseQuantity = () => setQuantity((q) => Math.min(q + 1, 5));
   const decreaseQuantity = () => setQuantity((q) => Math.max(q - 1, 1));
@@ -159,10 +174,16 @@ export default function ProductPageMain({ product }) {
             </div>
 
             <div className="flex flex-col space-y-3 mb-6">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md font-medium flex items-center justify-center">
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md font-medium flex items-center justify-center"
+              >
                 <i className="fas fa-shopping-cart mr-2"></i> Add to Cart
               </button>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-md font-medium flex items-center justify-center">
+              <button
+                onClick={() => handleBuyNow(product)}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-md font-medium flex items-center justify-center"
+              >
                 <i className="fas fa-bolt mr-2"></i> Buy Now
               </button>
             </div>

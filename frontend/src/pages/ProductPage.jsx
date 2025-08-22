@@ -11,6 +11,7 @@ const ProductPage = () => {
 
   // find the matching product
   const product = products.find((p) => p.id == id);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (!product) {
     return (

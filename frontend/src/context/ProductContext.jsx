@@ -3,12 +3,12 @@ import React, { createContext, useContext, useState } from "react";
 // Sample product data
 const initialProducts = [
   {
-    id: 1,
+    id: 20250101,
     title: "AudioTech Pro X7",
     brand: "AudioTech",
     reviews_count: 142,
     badge: "new",
-    description: "Loda",
+    description: "Best in class audio device.",
     images: [
       "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1000&q=80",
@@ -38,9 +38,9 @@ const initialProducts = [
     tabs: {
       specifications: {
         general: {
-          brand: "Apple",
-          model: "iPhone 15 Pro",
-          storage: "256GB",
+          brand: "AudioTech",
+          model: "Pro X7",
+          storage: "4GB",
           color: "Space Black",
         },
         features: [
@@ -76,7 +76,7 @@ const initialProducts = [
     },
   },
   {
-    id: 2,
+    id: 20250202,
     title: "EcoBrew Smart Coffee Maker",
     brand: "EcoBrew",
     reviews_count: 98,
@@ -145,7 +145,7 @@ const initialProducts = [
     },
   },
   {
-    id: 3,
+    id: 20250303,
     title: "FitPulse Pro Smartwatch",
     brand: "FitPulse",
     reviews_count: 210,
@@ -209,6 +209,75 @@ const initialProducts = [
         {
           question: "Can I reply to messages?",
           answer: "Yes, with quick replies on Android.",
+        },
+      ],
+    },
+  },
+  {
+    id: 20250404,
+    title: "SomeEscober Frame",
+    brand: "EcoBrew",
+    reviews_count: 98,
+    description: "PhotoFrame",
+    images: [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1000&q=80",
+    ],
+    pricing: {
+      current_price: 149.99,
+      original_price: 199.99,
+      currency: "USD",
+      discount_percentage: 25,
+    },
+    availability: {
+      status: "In Stock",
+      stock_left: 12,
+      max_per_customer: 3,
+    },
+    options: {
+      color: ["Black", "White"],
+    },
+    highlights: [
+      "Wi-Fi enabled smart brewing",
+      "Eco-friendly reusable filters",
+      "Schedule brews from your phone",
+      "Keeps coffee warm for 4 hours",
+    ],
+    tabs: {
+      specifications: {
+        general: {
+          brand: "EcoBrew",
+          model: "SmartBrew 3000",
+          capacity: "1.2L",
+          color: "Black",
+        },
+        features: [
+          "Smartphone app control",
+          "Energy-saving mode",
+          "Reusable stainless steel filter",
+        ],
+      },
+      reviews: [
+        {
+          rating: 5,
+          text: "Love being able to brew from bed using the app!",
+          author: "Emily R.",
+        },
+        {
+          rating: 4,
+          text: "Brews fast and tastes great, but wish it had more colors.",
+          author: "Daniel W.",
+        },
+      ],
+      qna: [
+        {
+          question: "Does it work with Alexa?",
+          answer: "Yes, it integrates with Alexa and Google Home.",
+        },
+        {
+          question: "Can I use paper filters?",
+          answer:
+            "Yes, though it comes with a reusable stainless steel filter.",
         },
       ],
     },
