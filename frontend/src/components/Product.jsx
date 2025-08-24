@@ -43,7 +43,7 @@ const ProductCard = ({
             onClick={() => openCart()}
             className={`w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm
               ${
-                addedProductId === index
+                addedProductId === product.id
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 pointer-events-none -translate-y-2"
               }
